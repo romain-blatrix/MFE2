@@ -11,6 +11,7 @@ module.exports = {
     hot: true,
     liveReload: false,
     port: 3000,
+    historyApiFallback: true,
   },
   target: "web",
   output: {

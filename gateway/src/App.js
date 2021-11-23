@@ -43,6 +43,7 @@ function loadComponent(scope, module) {
 }
 
 const useDynamicScript = (args) => {
+  
   const [ready, setReady] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
@@ -110,24 +111,13 @@ function System(props) {
     return <h2>Loading dynamic script: {props.system.url}</h2>;
   }
 
-  // pas besoin ?
-  // const AppComponent = React.lazy(
-  //   loadComponent(props.system.scope, props.system.modules[0])
-  // );
-
   const loadData = async () => {      
     const routes = await loadComponent(props.system.scope, props.system.module)();
     setRoutes(routes.default)
   }
 
   loadData()
-
-  console.log({routes});
-
-
-
   
-  // TODO context pour remplir les routes ????
   return null;
 }
 
@@ -150,23 +140,6 @@ const App = () => {
     getData();
   }, [])
 
-  // useEffect(() => {
-  //   const loadData = async (scope) => {  
-  //     setTimeout(() => {
-  //     console.log('========================================', window.mmp)
-  //   }, 3000)
-  //     // marche pas pcq remote pas loadé
-  //     const routes = await loadComponent(scope, './routes')();
-  //     console.log(routes.default);
-  
-  //     setRoutes(routes.default);
-  //   }
-    
-  //   systems.map(({scope}) => loadData(scope));
-    
-  // }, [systems])
-
-
   const contextValue = useMemo(() => ({
     addRoutes : (routeSet) => setRoutes({...mergeWith(routes, routeSet, function(a, b) {
       if (Array.isArray(a)) {
@@ -178,7 +151,6 @@ const App = () => {
   
   return (
     <RouteContext.Provider value={contextValue}>
-      {/* <Router> */}
       {systems.map(({url, scope}) => (
         <System system={{
           url,
@@ -187,15 +159,21 @@ const App = () => {
         }} />
       ))}
       
-      {Object.entries(routes).map(([domain, routes]) => (
-        <div>
-          <h2>{domain}</h2>
-          <ul>
-            {routes.map(({path, label}) => <li>{label}</li>)}
-          </ul>
-        </div>
-      ))}
-      {/* </Router> */}
+      <Router>
+        {Object.entries(routes).map(([domain, routes]) => (
+          <div>
+            <h2>{domain}</h2>
+            <ul>
+              {routes.map(({path, label}) => <li key={path}><Link to={path}>{label}</Link></li>)}
+            </ul>
+          </div>
+        ))}
+        <Switch>
+          {Object.entries(routes).map(([domain, routes]) => 
+            routes.map(({path, component}) => <Route path={path}>{component}</Route>)
+          )}
+        </Switch>
+      </Router>
     </RouteContext.Provider>
   )
 }
