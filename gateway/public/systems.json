@@ -1,6 +1,9 @@
 {
   "mmp": {
     "url": "http://localhost:3001/remoteEntry.js"
+  },
+  "mcm": {
+    "url": "http://localhost:3002/remoteEntry.js"
   }
 }
 

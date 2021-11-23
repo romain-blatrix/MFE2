@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {mergeWith} from "lodash";
-import loadable from '@loadable/component';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useLocation,
+  useRouteMatch
+} from 'react-router-dom';
 // const getRoutesFromJSON = (json) => {
   
 //   const systems = [];
@@ -82,6 +88,8 @@ function System(props) {
     url: props.system && props.system.url,
   });
 
+  const [routes, setRoutes] = useState([])
+
   if (!props.system) {
     return <h2>Not system specified</h2>;
   }
@@ -94,25 +102,22 @@ function System(props) {
     return <h2>Loading dynamic script: {props.system.url}</h2>;
   }
 
-  const AppComponent = React.lazy(
-    loadComponent(props.system.scope, props.system.modules[0])
-  );
+  // pas besoin ?
+  // const AppComponent = React.lazy(
+  //   loadComponent(props.system.scope, props.system.modules[0])
+  // );
 
-    const loadData = async () => {      
-    const routes = await loadComponent(props.system.scope, props.system.modules[1])();
-    console.log(routes.default);
+  const loadData = async () => {      
+    const routes = await loadComponent(props.system.scope, props.system.module)();
+    setRoutes(routes.default)
   }
 
   loadData()
 
-
-  return (
-    <React.Suspense fallback="Loading System">
-      
-      {/* a mettre dans le router */}
-      <AppComponent />
-    </React.Suspense>
-  );
+  console.log({routes});
+  
+  // TODO context pour remplir les routes ????
+  return null;
 }
 
 
@@ -153,16 +158,17 @@ const App = () => {
 
   
   return (
-    <div>
+    <Router>
     {systems.map(({url, scope}) => (
       <System system={{
         url,
         scope,
-        modules: ["./App", "./routes"],
+        module: "./routes",
       }} />
     ))}
+    
     {JSON.stringify(routes)}
-    </div>
+    </Router>
   )
 }
 
