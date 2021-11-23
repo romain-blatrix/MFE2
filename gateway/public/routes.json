@@ -1,0 +1,48 @@
+{
+  "mmp": {
+    "url": "http://localhost:3001/remoteEntry.js",
+    "routes": {
+      "mmp": [
+        {
+          "label": "Orders",
+          "path": "/orders"
+        },
+        {
+          "label": "Ratings",
+          "path": "/ratings"
+        }
+      ],
+      "settings": [
+        {
+          "label": "Logistic classes",
+          "path": "/logistic-classes"
+        },
+        {
+          "label": "Custom shipping",
+          "path": "/custom-shipping"
+        }
+      ]
+    }
+  },
+  "mcm": {
+    "url": "http://localhost:3002/remoteEntry.js",
+    "routes": {
+      "mcm": [
+        {
+          "label": "Product list",
+          "path": "/product-list"
+        },
+        {
+          "label": "Catalog management",
+          "path": "/catalog-management"
+        }
+      ],
+      "settings": [
+        {
+          "label": "MCM options",
+          "path": "/mcm-options"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "lerna run --scope @microfrontend/* --parallel start",
+    "build": "lerna run --scope @microfrontend/* build",
+    "serve": "lerna run --scope @microfrontend/* --parallel serve",
+    "clean": "lerna run --scope @microfrontend/* --parallel clean"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  },
+  "name": "microfrontend",
+  "workspaces": {
+    "packages": [
+      "gateway",
+      "mmp",
+      "mcm"
+    ]
+  }
+}
