@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import {mergeWith} from "lodash";
 import {
   BrowserRouter as Router,
@@ -8,6 +8,8 @@ import {
   useLocation,
   useRouteMatch
 } from 'react-router-dom';
+
+
 // const getRoutesFromJSON = (json) => {
   
 //   const systems = [];
@@ -90,6 +92,12 @@ function System(props) {
 
   const [routes, setRoutes] = useState([])
 
+  const contextRoutes = useContext(RouteContext);
+
+  useEffect(() => {
+    contextRoutes.addRoutes(routes)
+  }, [routes])
+
   if (!props.system) {
     return <h2>Not system specified</h2>;
   }
@@ -115,11 +123,15 @@ function System(props) {
   loadData()
 
   console.log({routes});
+
+
+
   
   // TODO context pour remplir les routes ????
   return null;
 }
 
+const RouteContext = React.createContext();
 
 const App = () => {
   const [routes, setRoutes] = useState({})
@@ -132,8 +144,6 @@ const App = () => {
       const entriesList = Object.entries(data);
 
       const systems = entriesList.map(([appName, {url}]) => ({url, scope: appName}))
-      console.log(systems);
-      
       setSystems(systems);
     }
 
@@ -156,19 +166,37 @@ const App = () => {
     
   // }, [systems])
 
+
+  const contextValue = useMemo(() => ({
+    addRoutes : (routeSet) => setRoutes({...mergeWith(routes, routeSet, function(a, b) {
+      if (Array.isArray(a)) {
+        return [...b, ...a];
+      }
+    })})
+  }))
+
   
   return (
-    <Router>
-    {systems.map(({url, scope}) => (
-      <System system={{
-        url,
-        scope,
-        module: "./routes",
-      }} />
-    ))}
-    
-    {JSON.stringify(routes)}
-    </Router>
+    <RouteContext.Provider value={contextValue}>
+      {/* <Router> */}
+      {systems.map(({url, scope}) => (
+        <System system={{
+          url,
+          scope,
+          module: "./routes",
+        }} />
+      ))}
+      
+      {Object.entries(routes).map(([domain, routes]) => (
+        <div>
+          <h2>{domain}</h2>
+          <ul>
+            {routes.map(({path, label}) => <li>{label}</li>)}
+          </ul>
+        </div>
+      ))}
+      {/* </Router> */}
+    </RouteContext.Provider>
   )
 }
 
