@@ -160,19 +160,23 @@ const App = () => {
       ))}
       
       <Router>
-        {Object.entries(routes).map(([domain, routes]) => (
-          <div>
-            <h2>{domain}</h2>
-            <ul>
-              {routes.map(({path, label}) => <li key={path}><Link to={path}>{label}</Link></li>)}
-            </ul>
-          </div>
-        ))}
-        <Switch>
-          {Object.entries(routes).map(([domain, routes]) => 
-            routes.map(({path, component}) => <Route path={path}>{component}</Route>)
-          )}
-        </Switch>
+        <div style={{padding: '30px', display: 'flex', gap: '50px'}}>
+          {Object.entries(routes).map(([domain, routes]) => (
+            <div>
+              <h2>{domain}</h2>
+              <ul style={{padding: 0, listStyle: 'none'}}>
+                {routes.map(({path, label}) => <li key={path}><Link to={path}>{label}</Link></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div style={{padding: '30px', background: '#FEEDAC'}}>
+          <Switch>
+            {Object.entries(routes).map(([domain, routes]) => 
+              routes.map(({path, component}) => <Route path={path}>{component}</Route>)
+            )}
+          </Switch>
+        </div>
       </Router>
     </RouteContext.Provider>
   )
