@@ -5,28 +5,8 @@ import {
   Switch,
   Route,
   Link,
-  useLocation,
-  useRouteMatch
 } from 'react-router-dom';
 
-
-// const getRoutesFromJSON = (json) => {
-  
-//   const systems = [];
-//   let routesObject = {};
-
-//   entriesList.map(([appName, {url, routes}]) => {
-//     systems.push({url, scope: appName});
-
-//     mergeWith(routesObject, routes, function(a, b) {
-//       if (Array.isArray(a)) {
-//         return [...b, ...a];
-//       }
-//     })
-//   })
-
-//   return {systems, routes: routesObject}
-// };
 
 function loadComponent(scope, module) {
   return async () => {
@@ -152,7 +132,7 @@ const App = () => {
   return (
     <RouteContext.Provider value={contextValue}>
       {systems.map(({url, scope}) => (
-        <System system={{
+        <System key={url} system={{
           url,
           scope,
           module: "./routes",
@@ -162,10 +142,14 @@ const App = () => {
       <Router>
         <div style={{padding: '30px', display: 'flex', gap: '50px'}}>
           {Object.entries(routes).map(([domain, routes]) => (
-            <div>
+            <div key={`${domain}`}>
               <h2>{domain}</h2>
               <ul style={{padding: 0, listStyle: 'none'}}>
-                {routes.map(({path, label}) => <li key={path}><Link to={path}>{label}</Link></li>)}
+                {routes.map(({path, label}) => (
+                  <li key={path} style={{padding: '3px 0'}}>
+                    <Link to={path}>{label}</Link>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
@@ -173,7 +157,7 @@ const App = () => {
         <div style={{padding: '30px', background: '#FEEDAC'}}>
           <Switch>
             {Object.entries(routes).map(([domain, routes]) => 
-              routes.map(({path, component}) => <Route path={path}>{component}</Route>)
+              routes.map(({path, component}) => <Route key={path} path={path}>{component}</Route>)
             )}
           </Switch>
         </div>
