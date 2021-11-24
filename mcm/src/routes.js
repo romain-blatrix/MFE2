@@ -10,19 +10,19 @@ const routes = {
   "mcm": [
     {
       label: "Product list",
-      path: "/product-list",
+      path: "/mcm/product-list",
       component: <Suspense fallback={fallback}><ProductList/></Suspense>
     },
     {
       label: "Catalog management",
-      path: "/catalog-management",
+      path: "/mcm/catalog-management",
       component: <Suspense fallback={fallback}><CatalogManagement/></Suspense>
     }
   ],
   "settings": [
     {
       label: "MCM options",
-      path: "/mcm-options",
+      path: "/mcm/mcm-options",
       component: <Suspense fallback={fallback}><MCMOptions/></Suspense>
     },
   ]

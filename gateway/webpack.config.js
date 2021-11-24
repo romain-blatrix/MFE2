@@ -36,10 +36,10 @@ module.exports = {
       shared: {
         react: {
           requiredVersion: deps.react,
-          import: "react",
-          shareKey: "react",
-          shareScope: "default",
-          singleton: true,
+          // import: "react",
+          // shareKey: "react",
+          // shareScope: "default",
+          // singleton: true,
           eager: true
         },
         "react-dom": {
