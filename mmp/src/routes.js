@@ -11,24 +11,24 @@ const routes = {
   "mmp": [
     {
       label: "Orders (with nested routes)",
-      path: "/orders/*",
+      path: "/mmp/orders/*",
       component: <Suspense fallback={fallback}><Orders/></Suspense>
     },
     {
       label: "Ratings",
-      path: "/ratings",
+      path: "/mmp/ratings",
       component: <Suspense fallback={fallback}><Ratings/></Suspense>
     }
   ],
   "settings": [
     {
       label: "Logistic classes",
-      path: "/logistic-classes",
+      path: "/mmp/logistic-classes",
       component: <Suspense fallback={fallback}><LogisticClasses/></Suspense>
     },
     {
       label: "Custom shipping",
-      path: "/custom-shipping",
+      path: "/mmp/custom-shipping",
       component: <Suspense fallback={fallback}><CustomShipping/></Suspense>
     }
   ]

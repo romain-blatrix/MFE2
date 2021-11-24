@@ -66,7 +66,7 @@ const useDynamicScript = (args) => {
   };
 };
 
-function System(props) {
+function Remote(props) {
   const { ready, failed } = useDynamicScript({
     url: props.system && props.system.url,
   });
@@ -105,16 +105,16 @@ const RouteContext = React.createContext();
 
 const App = () => {
   const [routes, setRoutes] = useState({})
-  const [systems, setSystems] = useState([])
+  const [remotes, setRemotes] = useState([])
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch('/systems.json');
+      const response = await fetch('/remotes.json');
       const data = await response.json();
       const entriesList = Object.entries(data);
 
-      const systems = entriesList.map(([appName, {url}]) => ({url, scope: appName}))
-      setSystems(systems);
+      const remotes = entriesList.map(([appName, {url}]) => ({url, scope: appName}))
+      setRemotes(remotes);
     }
 
     getData();
@@ -131,8 +131,8 @@ const App = () => {
   
   return (
     <RouteContext.Provider value={contextValue}>
-      {systems.map(({url, scope}) => (
-        <System key={url} system={{
+      {remotes.map(({url, scope}) => (
+        <Remote key={url} system={{
           url,
           scope,
           module: "./routes",
