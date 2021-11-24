@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import {mergeWith} from "lodash";
 import {
-  BrowserRouter as Router,
-  Switch,
+  BrowserRouter,
+  Routes,
   Route,
-  Link,
+  Link
 } from 'react-router-dom';
 
 
@@ -139,11 +139,11 @@ const App = () => {
         }} />
       ))}
       
-      <Router>
+      <BrowserRouter>
         <div style={{padding: '30px', display: 'flex', gap: '50px'}}>
           {Object.entries(routes).map(([domain, routes]) => (
             <div key={`${domain}`}>
-              <h2>{domain}</h2>
+              <h3>{domain}</h3>
               <ul style={{padding: 0, listStyle: 'none'}}>
                 {routes.map(({path, label}) => (
                   <li key={path} style={{padding: '3px 0'}}>
@@ -154,14 +154,14 @@ const App = () => {
             </div>
           ))}
         </div>
-        <div style={{padding: '30px', background: '#FEEDAC'}}>
-          <Switch>
+        <div style={{padding: '30px', background: '#FED'}}>
+          <Routes>
             {Object.entries(routes).map(([domain, routes]) => 
-              routes.map(({path, component}) => <Route key={path} path={path}>{component}</Route>)
+              routes.map(({path, component}) => <Route key={path} path={path} element={component} />)
             )}
-          </Switch>
+          </Routes>
         </div>
-      </Router>
+      </BrowserRouter>
     </RouteContext.Provider>
   )
 }
