@@ -10,25 +10,25 @@ const fallback = "loading";
 const routes = {
   "mmp": [
     {
-      "label": "Orders",
-      "path": "/orders",
+      label: "Orders",
+      path: "/orders",
       component: <Suspense fallback={fallback}><Orders/></Suspense>
     },
     {
-      "label": "Ratings",
-      "path": "/ratings",
+      label: "Ratings",
+      path: "/ratings",
       component: <Suspense fallback={fallback}><Ratings/></Suspense>
     }
   ],
   "settings": [
     {
-      "label": "Logistic classes",
-      "path": "/logistic-classes",
+      label: "Logistic classes",
+      path: "/logistic-classes",
       component: <Suspense fallback={fallback}><LogisticClasses/></Suspense>
     },
     {
-      "label": "Custom shipping",
-      "path": "/custom-shipping",
+      label: "Custom shipping",
+      path: "/custom-shipping",
       component: <Suspense fallback={fallback}><CustomShipping/></Suspense>
     }
   ]

@@ -9,20 +9,20 @@ const fallback = "loading";
 const routes = {
   "mcm": [
     {
-      "label": "Product list",
-      "path": "/product-list",
+      label: "Product list",
+      path: "/product-list",
       component: <Suspense fallback={fallback}><ProductList/></Suspense>
     },
     {
-      "label": "Catalog management",
-      "path": "/catalog-management",
+      label: "Catalog management",
+      path: "/catalog-management",
       component: <Suspense fallback={fallback}><CatalogManagement/></Suspense>
     }
   ],
   "settings": [
     {
-      "label": "MCM options",
-      "path": "/mcm-options",
+      label: "MCM options",
+      path: "/mcm-options",
       component: <Suspense fallback={fallback}><MCMOptions/></Suspense>
     },
   ]
