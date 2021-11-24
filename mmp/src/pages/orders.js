@@ -5,11 +5,14 @@ import {
   Link, 
   Navigate
 } from 'react-router-dom';
+import {max} from 'lodash';
 
 const AllOrders = lazy(() => import('./orders-all'))
 const PendingOrders = lazy(() => import('./orders-pending'))
 
-const Order = () => { 
+const Order = () => {
+
+  console.log("MMP / lodash 3  -> ", max([]))
   return (
     <div>
       Order page // React version : {React.version}

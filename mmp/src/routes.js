@@ -1,35 +1,33 @@
-import React, {lazy, Suspense} from "react";
+import React, {lazy} from "react";
 
 const Orders = lazy(() => import('./pages/orders'))
 const Ratings = lazy(() => import('./pages/ratings'))
 const CustomShipping = lazy(() => import('./pages/settings/custom-shipping'))
 const LogisticClasses = lazy(() => import('./pages/settings/logistic-classes'))
 
-const fallback = "loading";
-
 const routes = {
   "mmp": [
     {
       label: "Orders (with nested routes)",
       path: "/mmp/orders/*",
-      component: <Suspense fallback={fallback}><Orders/></Suspense>
+      component: <Orders/>
     },
     {
       label: "Ratings",
       path: "/mmp/ratings",
-      component: <Suspense fallback={fallback}><Ratings/></Suspense>
+      component: <Ratings/>
     }
   ],
   "settings": [
     {
       label: "Logistic classes",
       path: "/mmp/logistic-classes",
-      component: <Suspense fallback={fallback}><LogisticClasses/></Suspense>
+      component: <LogisticClasses/>
     },
     {
       label: "Custom shipping",
       path: "/mmp/custom-shipping",
-      component: <Suspense fallback={fallback}><CustomShipping/></Suspense>
+      component: <CustomShipping/>
     }
   ]
 }

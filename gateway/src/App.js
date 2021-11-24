@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { Suspense, useState, useEffect, createContext, useContext, useMemo } from "react";
 import {mergeWith} from "lodash";
 import {
   BrowserRouter,
@@ -24,8 +24,8 @@ function loadComponent(scope, module) {
 
 const useDynamicScript = (args) => {
   
-  const [ready, setReady] = React.useState(false);
-  const [failed, setFailed] = React.useState(false);
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   React.useEffect(() => {
     if (!args.url) {
@@ -101,7 +101,7 @@ function Remote(props) {
   return null;
 }
 
-const RouteContext = React.createContext();
+const RouteContext = createContext();
 
 const App = () => {
   const [routes, setRoutes] = useState({})
@@ -121,11 +121,13 @@ const App = () => {
   }, [])
 
   const contextValue = useMemo(() => ({
-    addRoutes : (routeSet) => setRoutes({...mergeWith(routes, routeSet, function(a, b) {
-      if (Array.isArray(a)) {
-        return [...b, ...a];
-      }
-    })})
+    addRoutes : (routeSet) => setRoutes({
+      ...mergeWith(routes, routeSet, function(a, b) {
+        if (Array.isArray(a)) {
+          return [...b, ...a];
+        }
+      })
+    })
   }))
 
   
@@ -155,11 +157,13 @@ const App = () => {
           ))}
         </div>
         <div style={{padding: '30px', background: '#FED'}}>
-          <Routes>
-            {Object.entries(routes).map(([domain, routes]) => 
-              routes.map(({path, component}) => <Route key={path} path={path} element={component} />)
-            )}
-          </Routes>
+          <Suspense fallback="loading">
+            <Routes>
+              {Object.entries(routes).map(([domain, routes]) => 
+                routes.map(({path, component}) => <Route key={path} path={path} element={component} />)
+              )}
+            </Routes>
+          </Suspense>
         </div>
       </BrowserRouter>
     </RouteContext.Provider>
