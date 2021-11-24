@@ -9,4 +9,4 @@
 yarn && yarn start
 ```
 
-and navigate to `localhost:3000`
+and navigate to [localhost:3000](http://localhost:3000)
