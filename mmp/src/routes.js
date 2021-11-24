@@ -10,8 +10,8 @@ const fallback = "loading";
 const routes = {
   "mmp": [
     {
-      label: "Orders",
-      path: "/orders",
+      label: "Orders (with nested routes)",
+      path: "/orders/*",
       component: <Suspense fallback={fallback}><Orders/></Suspense>
     },
     {
