@@ -35,6 +35,9 @@ module.exports = {
       exposes: {
         "./routes": "./src/routes",
       },
+      remotes: {
+        mcm: "mcm@http://localhost:3002/remoteEntry.js"
+      },
       shared: {
         // react: {
         //   requiredVersion: deps.react,

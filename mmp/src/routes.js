@@ -2,6 +2,7 @@ import React, {lazy} from "react";
 
 const Orders = lazy(() => import('./pages/orders'))
 const Ratings = lazy(() => import('./pages/ratings'))
+const MCMWidget = lazy(() => import('mcm/Widget'))
 const CustomShipping = lazy(() => import('./pages/settings/custom-shipping'))
 const LogisticClasses = lazy(() => import('./pages/settings/logistic-classes'))
 
@@ -16,6 +17,11 @@ const routes = {
       label: "Ratings",
       path: "/mmp/ratings",
       component: <Ratings/>
+    },
+    {
+      label: "MCM widget",
+      path: "/mmp/mcm-widget",
+      component: <MCMWidget/>
     }
   ],
   "settings": [
