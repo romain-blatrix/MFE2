@@ -13,7 +13,7 @@ const PendingOrders = lazy(() => import('./orders-pending'))
 const Order = () => (
   <div>
     Order page // React version : {React.version}
-    <div>{`MMP / lodash 3 -> max([]) = ${max([])}`}</div>
+    <div>{`MMP / lodash 4 -> max([]) = ${max([])}`}</div>
     <ul style={{padding: 0, listStyle: 'none'}}>
       <li style={{padding: '3px 0'}}>
         <Link to="all-orders">All orders</Link>

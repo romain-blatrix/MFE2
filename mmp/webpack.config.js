@@ -39,21 +39,15 @@ module.exports = {
         mcm: "mcm@http://localhost:3002/remoteEntry.js"
       },
       shared: {
-        // react: {
-        //   requiredVersion: deps.react,
-        //   // import: "react",
-        //   // shareKey: "react",
-        //   // shareScope: "default",
-        //   // singleton: true,
-        //   eager: true
-        // },
-        // "react-dom": {
-        //   requiredVersion: deps["react-dom"],
-        //   singleton: true,
-        //   eager: true
-        // },
+        react: {
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          requiredVersion: deps["react-dom"],
+        },
         "react-router-dom" : {
           requiredVersion: deps["react-router-dom"],
+          singleton: true
         }
       },
     }),
