@@ -21,3 +21,9 @@ and navigate to [localhost:3000](http://localhost:3000)
   - `lodash` is not in the shared vendors so all 3 remotes will load it's version
 - MCM exposes a `Widget` used in MMP (see `mmp/src/routes.js`)
 - [/mmp/orders](http://localhost:3000/mmp/orders) has nested routes
+
+
+## Next steps
+
+- How does it work with 2 different versions of React ?
+- How can we handle a MFE not available ?
