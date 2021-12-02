@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect, createContext, useContext, useMemo } from "react";
+import React, { useRef, Suspense, useState, useEffect, createContext, useContext, useMemo } from "react";
 import {mergeWith} from "lodash";
 import {
   BrowserRouter,
@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 
-function loadComponent(scope, module) {
+const loadComponent = (scope, module) => {
   return async () => {
     // Initializes the share scope. This fills it with known provided modules from this build and all remotes
     await __webpack_init_sharing__("default");
@@ -23,11 +23,12 @@ function loadComponent(scope, module) {
 }
 
 const useDynamicScript = (args) => {
-  
+  const elementRef = useRef(null);
+
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!args.url) {
       return;
     }
@@ -48,17 +49,26 @@ const useDynamicScript = (args) => {
 
     element.onerror = () => {
       console.error(`Dynamic Script Error: ${args.url}`);
-      setReady(false);
+      setReady(true);
       setFailed(true);
     };
 
-    document.head.appendChild(element);
+    elementRef.current = element;
+    document.head.appendChild(elementRef.current);
 
     return () => {
       console.log(`Dynamic Script Removed: ${args.url}`);
-      document.head.removeChild(element);
+      elementRef.current && document.head.removeChild(elementRef.current);
     };
   }, [args.url]);
+
+  useEffect(() => {
+    if (failed) {
+      console.info('removing failed script')
+      document.head.removeChild(elementRef.current);
+      elementRef.current = null
+    }
+  }, [failed]) 
 
   return {
     ready,
@@ -66,10 +76,8 @@ const useDynamicScript = (args) => {
   };
 };
 
-function Remote(props) {
-  const { ready, failed } = useDynamicScript({
-    url: props.system && props.system.url,
-  });
+const Remote = ({url, scope, module}) => {
+  const { ready, failed } = useDynamicScript({ url });
 
   const [routes, setRoutes] = useState([])
 
@@ -79,26 +87,22 @@ function Remote(props) {
     contextRoutes.addRoutes(routes)
   }, [routes])
 
-  if (!props.system) {
-    return <h2>Not system specified</h2>;
+  if (!ready) {
+    return 'loading'
   }
 
   if (failed) {
-    return <h2>Failed to load dynamic script: {props.system.url}</h2>;
-  }
-
-  if (!ready) {
-    return <h2>Loading dynamic script: {props.system.url}</h2>;
+    return <div style={{backgroundColor: '#e77e7e', padding: '10px'}}>{scope}</div>
   }
 
   const loadData = async () => {      
-    const routes = await loadComponent(props.system.scope, props.system.module)();
+    const routes = await loadComponent(scope, module)();
     setRoutes(routes.default)
   }
 
   loadData()
   
-  return null;
+  return <div style={{backgroundColor: '#429d77', padding: '10px'}}>{scope}</div>
 }
 
 const RouteContext = createContext();
@@ -133,14 +137,12 @@ const App = () => {
   
   return (
     <RouteContext.Provider value={contextValue}>
-      {remotes.map(({url, scope}) => (
-        <Remote key={url} system={{
-          url,
-          scope,
-          module: "./routes",
-        }} />
-      ))}
-      
+      <div style={{position: 'absolute', top: '10px', right: '10px', border: '1px solid #919191', padding: '10px', display: 'flex', gap: '10px'}}>
+        {remotes.map(({url, scope}) => (
+          <Remote key={url} url={url} scope={scope} module={"./routes"} />
+        ))}
+      </div>
+
       <BrowserRouter>
         <div style={{padding: '30px', display: 'flex', gap: '50px'}}>
           {Object.entries(routes).map(([domain, routes]) => (
@@ -159,7 +161,7 @@ const App = () => {
         <div style={{padding: '30px', background: '#FED'}}>
           <Suspense fallback="loading">
             <Routes>
-              {Object.entries(routes).map(([domain, routes]) => 
+              {Object.entries(routes).map(([_, routes]) => 
                 routes.map(({path, component}) => <Route key={path} path={path} element={component} />)
               )}
             </Routes>
