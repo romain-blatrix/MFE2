@@ -11,8 +11,16 @@ yarn & yarn start
 
 and navigate to [localhost:3000](http://localhost:3000)
 
-- `localhost:3001` is MMP
-- `localhost:3002` is MCM
+
+|                             |            Gateway            |              MMP              |              MCM              |
+| --------------------------- | :---------------------------: | :---------------------------: | :---------------------------: |
+| <b>Port</b>                 | [3000](http://localhost:3000) | [3001](http://localhost:3001) | [3002](http://localhost:3002) |
+| <b>React version</b>        |            17 ⚡️             |              17               |              18               |
+| <b>Lodash version</b>       |             4 ⚡️             |               4               |               3               |
+| <b>React-router version</b> |           6 ⚡️ 🙋🏻‍♂️            |             6 🙋🏻‍♂️              |             6 🙋🏻‍♂️              |
+
+⚡️ : loaded with `eager: true` <br />
+🙋🏻‍♂️ : loaded with `singleton: true`
 
 ## Gotchas
 
