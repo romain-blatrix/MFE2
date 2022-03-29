@@ -1,0 +1,22 @@
+{
+  "name": "provider-library",
+  "version": "1.0.1",
+  "description": "A library that provides a React context",
+  "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "babel index.js -d lib"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-react": "^7.16.7",
+    "react": "^17.0.2"
+  },
+  "peerDependencies": {
+    "react": ">17"
+  }
+}
