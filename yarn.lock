@@ -5951,6 +5951,16 @@ protoduck@^5.0.1:
   dependencies:
     genfun "^5.0.0"
 
+provider-library@2.0.0:
+  version "2.0.0"
+  resolved "https://npm-proxy.fury.io/mirakl/~/up/ver_2aKv4V/provider-library-2.0.0.tgz#deb4e88d11082f1f5dfd916e5a5462549051d0cc"
+  integrity sha1-3rTojREILx9d/ZFuWlRiVJBR0Mw=
+
+provider-library@^1.0.1:
+  version "1.0.1"
+  resolved "https://npm-proxy.fury.io/mirakl/~/up/ver_1erdma/provider-library-1.0.1.tgz#26ea6512433fb9ca7270c8f0d70b5d8cb3a78152"
+  integrity sha1-JuplEkM/ucpycMjw1wtdjLOngVI=
+
 proxy-addr@~2.0.5:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.7.tgz#f19fe69ceab311eeb94b42e70e8c2070f9ba1025"

@@ -48,6 +48,9 @@ module.exports = {
         "react-router-dom" : {
           requiredVersion: deps["react-router-dom"],
           singleton: true
+        },
+        "provider-library" : {
+          requiredVersion: deps["provider-library"],
         }
       },
     }),

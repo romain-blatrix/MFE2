@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import {LibraryProvider, useLibraryContext} from "provider-library";
 
 
 const loadComponent = (scope, module) => {
@@ -68,7 +69,7 @@ const useDynamicScript = (args) => {
       document.head.removeChild(elementRef.current);
       elementRef.current = null
     }
-  }, [failed]) 
+  }, [failed])
 
   return {
     ready,
@@ -95,13 +96,13 @@ const Remote = ({url, scope, module}) => {
     return <div style={{backgroundColor: '#e77e7e', padding: '10px'}}>{scope}</div>
   }
 
-  const loadData = async () => {      
+  const loadData = async () => {
     const routes = await loadComponent(scope, module)();
     setRoutes(routes.default)
   }
 
   loadData()
-  
+
   return <div style={{backgroundColor: '#429d77', padding: '10px'}}>{scope}</div>
 }
 
@@ -134,7 +135,7 @@ const App = () => {
     })
   }))
 
-  
+
   return (
     <RouteContext.Provider value={contextValue}>
       <div style={{position: 'absolute', top: '10px', right: '10px', border: '1px solid #919191', padding: '10px', display: 'flex', gap: '10px'}}>
@@ -144,31 +145,47 @@ const App = () => {
       </div>
 
       <BrowserRouter>
-        <div style={{padding: '30px', display: 'flex', gap: '50px'}}>
-          {Object.entries(routes).map(([domain, routes]) => (
-            <div key={`${domain}`}>
-              <h3>{domain}</h3>
-              <ul style={{padding: 0, listStyle: 'none'}}>
-                {routes.map(({path, label}) => (
-                  <li key={path} style={{padding: '3px 0'}}>
-                    <Link to={path}>{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div style={{padding: '30px', background: '#FED'}}>
-          <Suspense fallback="loading">
-            <Routes>
-              {Object.entries(routes).map(([_, routes]) => 
-                routes.map(({path, component}) => <Route key={path} path={path} element={component} />)
-              )}
-            </Routes>
-          </Suspense>
-        </div>
+        <LibraryProvider appName="Gateway">
+          <div style={{padding: '30px', display: 'flex', gap: '50px'}}>
+            {Object.entries(routes).map(([domain, routes]) => (
+              <div key={`${domain}`}>
+                <h3>{domain}</h3>
+                <ul style={{padding: 0, listStyle: 'none'}}>
+                  {routes.map(({path, label}) => (
+                    <li key={path} style={{padding: '3px 0'}}>
+                      <Link to={path}>{label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div style={{padding: '30px', background: '#FED'}}>
+            <Suspense fallback="loading">
+              <Routes>
+                {Object.entries(routes).map(([_, routes]) =>
+                  routes.map(({path, component}) => <Route key={path} path={path} element={component} />)
+                )}
+              </Routes>
+            </Suspense>
+          </div>
+          <GatewayComponent />
+        </LibraryProvider>
       </BrowserRouter>
     </RouteContext.Provider>
+  )
+}
+
+function GatewayComponent() {
+  const libraryContext = useLibraryContext();
+
+  return (
+      <div>
+        <h2>Content inside the gateway</h2>
+        <div>
+          The application in the context is: {libraryContext.appName}
+        </div>
+      </div>
   )
 }
 

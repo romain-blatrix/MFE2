@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "lodash": "3.0.0",
+    "provider-library": "2.0.0",
     "react": "18.0.0-beta-149b420f6-20211119",
     "react-dom": "18.0.0-beta-149b420f6-20211119",
     "react-router-dom": "6.0.2"
