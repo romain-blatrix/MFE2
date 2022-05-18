@@ -39,10 +39,12 @@ module.exports = {
           // import: "react",
           // shareKey: "react",
           // shareScope: "default",
+          singleton: true,
           eager: true
         },
         "react-dom": {
           requiredVersion: deps["react-dom"],
+          singleton: true,
           eager: true
         },
         "react-router-dom" : {
