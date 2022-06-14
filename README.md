@@ -27,11 +27,10 @@ and navigate to [localhost:3000](http://localhost:3000)
 - vendors loading
   - Gateway loads `react` and `react-router-dom` as `eager` = vendors are not chunked and loaded synchronously
   - Gateway & MMP use same vendor versions (MCM has a different `lodash` version). See [/mcm/product-list](http://localhost:3000/mcm/product-list) and [/mmp/orders](http://localhost:3000/mmp/orders)
-  - MCM's version of `react` is loaded at the beginning asynchronously. We need each remote to run with it's own set of vendors to avoid border effects.
-    - multiple React versions ? Not possible. We can't use another version than the shell one without render the app with its version. So React, tells that it's now possible
-[no big deal](https://reactjs.org/blog/2020/10/20/react-v17.html#:~:text=We%E2%80%99re%20fixing%20many,on%20React%2017) but not straightforward at all especially when dealing with micro-frontend.
+  - MCM's version of `react` is loaded at the beginning asynchronously. We need each remote to run with its own set of vendors to avoid border effects.
+    - multiple React versions? Not possible. We cannot use another version than the shell one without rendering the app with its version. React tells that [it is now possible](https://reactjs.org/blog/2020/10/20/react-v17.html#:~:text=We%E2%80%99re%20fixing%20many,on%20React%2017) but not straightforward at all especially when dealing with micro-frontend.
   - `react-router-dom` needs to be a singleton since we rely on [v6's descendant routes](https://reactrouter.com/docs/en/v6/getting-started/overview#descendant-routes)
-  - `lodash` is not in the shared vendors so all 3 remotes will load it's version
+  - `lodash` is not in the shared vendors so all 3 remotes will load its version
 - MCM exposes a `Widget` used in MMP (see `mmp/src/routes.js`)
 - [/mmp/orders](http://localhost:3000/mmp/orders) has nested routes
 - if a remote is unavailable, routes are not available. Nested internal routes accessing unavailable remotes will result in an error caught by an `ErrorBoundary`
